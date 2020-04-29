@@ -7,7 +7,7 @@
 
       <VueBootstrapTypeahead
         @hit="select()"
-        style="z-index: 15000"
+        style="z-index: 1001"
         v-model="selection"
         :data="locations"
         :serializer="d => d.name"

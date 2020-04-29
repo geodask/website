@@ -1,6 +1,6 @@
 <template>
-  <b-overlay opacity="0.5" :show="loading" z-index="600" rounded="sm">
-    <div style="height: 85vh; width: 100%; position:relative;">
+  <b-overlay styl opacity="0.5" :show="loading" z-index="500" rounded="sm">
+    <div style="height: auto; width: auto;  position:relative;">
       <l-map
         ref="map"
         :zoom="zoom"
@@ -233,7 +233,7 @@ export default {
 }
 
 .legend-container {
-  z-index: 10000;
+  z-index: 1000;
   width: auto;
   height: auto;
   pointer-events: none;

@@ -18,7 +18,7 @@
       </a>
     </div>
 
-    <Map></Map>
+    <Map :height="'85vh'"></Map>
   </div>
 </template>
 

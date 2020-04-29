@@ -1,7 +1,7 @@
 <template>
   <b-container class="p-4" fluid v-if="feature">
     <b-row>
-      <b-col md="5" lg="5" cols="12" class="details-column pb-4">
+      <b-col md="6" lg="6" cols="12" class="details-column pb-4">
         <b-card>
           <b-row class="pt-2 pb-2" no-gutters align-v="center">
             <b-col cols="auto" class="mr-1">
@@ -38,14 +38,23 @@
         </b-card>
       </b-col>
 
-      <b-col md="5" cols="12" class="map-colum">
+      <b-col md="4" lg="4" cols="12" class="map-colum">
         <Map
-          :width="'80%'"
-          :height="'60%'"
+          :width="'auto'"
+          :height="'300px'"
           :legend="false"
           :center="[feature.geometry.coordinates[1], feature.geometry.coordinates[0]]"
           :zoom="12"
         ></Map>
+      </b-col>
+    </b-row>
+
+    <b-row align-v="center">
+      <b-col xs="12" lg="6">
+        <line-chart :chartData="chartData[0].data" :options="chartData[0].options"></line-chart>
+      </b-col>
+      <b-col xs="12" lg="6">
+        <line-chart :chartData="chartData[1].data" :options="chartData[1].options"></line-chart>
       </b-col>
     </b-row>
   </b-container>
@@ -53,20 +62,28 @@
 
 <script>
 import Map from "../components/Map";
+import LineChart from "../components/LineChart";
+import { ChartService } from "../services/mock/ChartService";
 
 export default {
   components: {
-    Map
+    Map,
+    LineChart
   },
   data() {
     return {
       feature: null,
       geoJson: {},
-      coordinates: []
+      coordinates: [],
+      chartData: []
     };
   },
 
   async created() {
+    ChartService.getData().then(data => {
+      this.chartData = data;
+    });
+
     const istatId = this.$route.params.istatId;
 
     const response = await fetch(
@@ -94,3 +111,10 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+/* .small {
+  max-height: 200px;
+  margin: 0;
+} */
+</style>
