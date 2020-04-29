@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-navbar variant="light" type="light" class="d-flex">
+    <b-navbar variant="light" type="light">
       <b-navbar-brand to="/">
         <img src="./assets/logo-ioconto-64.png" />
       </b-navbar-brand>
@@ -12,8 +12,8 @@
         :data="locations"
         :serializer="d => d.name"
         placeholder="Ricerca per comune"
-        class="flex-grow-1"
         size="lg"
+        class="flex-grow-1"
       ></VueBootstrapTypeahead>
 
       <b-navbar-nav pills class="ml-auto">
