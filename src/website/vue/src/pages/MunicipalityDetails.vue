@@ -57,6 +57,12 @@
       </b-col>
       <b-col xs="12" lg="6">
         <b-card>
+          <canvas
+            id="overlay"
+            width="600"
+            height="400"
+            style="position:absolute;pointer-events:none;"
+          ></canvas>
           <line-chart :chartData="chartData[1].data" :options="chartData[1].options"></line-chart>
         </b-card>
       </b-col>

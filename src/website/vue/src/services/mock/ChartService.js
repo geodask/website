@@ -21,7 +21,8 @@ const charts = [
         display: true
       },
       responsive: true,
-      maintainAspectRatio: false
+      maintainAspectRatio: false,
+      events: ["mousedown", "mousemove", "click"]
     }
   },
   {
