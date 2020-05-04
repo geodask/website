@@ -108,9 +108,20 @@ export default {
 
             const end = this.renderData.labels[points[0]._index];
 
-            const indexStart = this.renderData.labels.indexOf(start);
-            const indexEnd = this.renderData.labels.indexOf(end);
+            let indexStart = this.renderData.labels.indexOf(start);
+            let indexEnd = this.renderData.labels.indexOf(end);
+
             console.log(indexStart, indexEnd);
+
+
+            if (indexStart > indexEnd) {
+                const tmp = indexEnd;
+                indexEnd = indexStart;
+                indexStart = tmp;
+            }
+
+            console.log(indexStart, indexEnd);
+
 
 
 
@@ -137,6 +148,10 @@ export default {
             if (!this.scrollStatus.functionCall) {
 
                 if (event.deltaY > 0) {
+
+                    if (this.dataHistory.length - 1 < 0) {
+                        return;
+                    }
 
                     this.renderData.labels = this.dataHistory[this.dataHistory.length - 1].labels;
                     this.renderData.datasets[0].data = this.dataHistory[this.dataHistory.length - 1].datasets[0].data;
