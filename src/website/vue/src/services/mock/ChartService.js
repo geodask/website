@@ -12,7 +12,8 @@ const charts = [
           label: "2020",
           borderColor: "rgb(0, 0, 255)",
           data: [2, 1, 1, 1, 2, 1, 2, 4, 3]
-        }
+        },
+
       ],
     },
     options: {

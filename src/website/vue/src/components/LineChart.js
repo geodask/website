@@ -1,21 +1,53 @@
 import { Line, mixins } from 'vue-chartjs'
-const { reactiveProp } = mixins
+import _ from 'lodash';
 
 export default {
     extends: Line,
     props: ['chartData', 'options'],
-    mixins: [reactiveProp],
+    mixins: [mixins.reactiveProp],
     data() {
         return {
+            oldData: {},
             drag: false,
+            dataHistory: [],
+            scrollStatus: {
+                wheeling: false,
+                functionCall: false
+            },
+            scrollTimer: false,
+            renderData: {}
         }
     },
+
+    created() {
+        this.renderData = this.chartData;
+    },
+
+    watch: {
+        renderData() {
+            this.renderChart(this.renderData, this.options);
+        }
+    },
+
     mounted() {
 
-        this.renderChart(this.chartData, this.options);
+        const overlay = document.createElement('canvas');
+        overlay.width = 600;
+        overlay.height = 200;
+        overlay.id = "OVERLAY_ID";
+        overlay.style.position = 'absolute';
+        overlay.style.maxHeight = '200';
+        overlay.style.maxWidth = 'auto';
+        // overlay.style.padding = '20px';
+        overlay.style.pointerEvents = 'none';
+
+        this.$el.parentElement.insertBefore(overlay, this.$el.parentElement.firstChild);
 
 
-        var overlay = document.getElementById('overlay');
+        this.renderChart(this.renderData, this.options);
+
+
+        //  overlay = document.getElementById('overlay');
         var startIndex = 0;
         overlay.width = this.$refs.canvas.width;
         overlay.height = this.$refs.canvas.height;
@@ -27,9 +59,12 @@ export default {
         };
         var drag = false;
         this.$refs.canvas.addEventListener('pointerdown', evt => {
+            this.dataHistory.push(_.cloneDeep(this.renderData));
+
             const points = this.$data._chart.getElementsAtEventForMode(evt, 'index', {
                 intersect: false
             });
+
             startIndex = points[0]._index;
             const rect = this.$refs.canvas.getBoundingClientRect();
             selectionRect.startX = evt.clientX - rect.left;
@@ -69,26 +104,61 @@ export default {
 
 
 
-            const start = this.chartData.labels[startIndex];
+            const start = this.renderData.labels[startIndex];
 
-            const end = this.chartData.labels[points[0]._index];
+            const end = this.renderData.labels[points[0]._index];
 
-            const indexStart = this.chartData.labels.indexOf(start);
-            const indexEnd = this.chartData.labels.indexOf(end);
+            const indexStart = this.renderData.labels.indexOf(start);
+            const indexEnd = this.renderData.labels.indexOf(end);
             console.log(indexStart, indexEnd);
 
 
-            this.chartData.labels = this.chartData.labels.slice(indexStart, indexEnd);
-            this.chartData.datasets[0].data = this.chartData.datasets[0].data.slice(indexStart, indexEnd);
-            this.chartData.datasets[1].data = this.chartData.datasets[1].data.slice(indexStart, indexEnd);
 
-            const tmp = { ...this.chartData };
-            this.chartData = null;
-            this.chartData = tmp;
+            this.renderData.labels = this.renderData.labels.slice(indexStart, indexEnd);
+            this.renderData.datasets[0].data = this.renderData.datasets[0].data.slice(indexStart, indexEnd);
+            this.renderData.datasets[1].data = this.renderData.datasets[1].data.slice(indexStart, indexEnd);
 
-            console.log(this.chartData);
-            // console.log('implement filter between ' + this.chartData.labels[startIndex] + ' and ' + this.chartData.labels[points[0]._index]);
+            const tmp = { ...this.renderData };
+            this.renderData = null;
+            this.renderData = tmp;
+
+
+
+
+
+            // console.log('implement filter between ' + this.renderData.labels[startIndex] + ' and ' + this.renderData.labels[points[0]._index]);
         });
+
+        this.$refs.canvas.addEventListener('wheel', (event) => {
+            this.scrollStatus.wheeling = true;
+            event.preventDefault();
+            event.stopPropagation();
+
+            if (!this.scrollStatus.functionCall) {
+
+                if (event.deltaY > 0) {
+
+                    this.renderData.labels = this.dataHistory[this.dataHistory.length - 1].labels;
+                    this.renderData.datasets[0].data = this.dataHistory[this.dataHistory.length - 1].datasets[0].data;
+                    this.renderData.datasets[1].data = this.dataHistory[this.dataHistory.length - 1].datasets[1].data;
+
+                    const tmp = { ...this.renderData };
+                    this.renderData = null;
+                    this.renderData = tmp;
+
+                    this.dataHistory = this.dataHistory.slice(0, this.dataHistory.length - 1);
+
+                }
+                this.scrollStatus.functionCall = true;
+                clearInterval(this.scrollTimer);
+                this.scrollTimer = setTimeout(() => {
+                    this.scrollStatus.wheeling = false;
+                    this.scrollStatus.functionCall = false;
+                }, 50)
+            }
+
+
+        })
 
 
 
