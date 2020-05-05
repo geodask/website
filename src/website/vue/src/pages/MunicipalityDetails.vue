@@ -55,11 +55,6 @@
           <line-chart :chartData="chartData[0].data" :options="chartData[0].options"></line-chart>
         </b-card>
       </b-col>
-      <b-col xs="12" lg="6">
-        <b-card>
-          <line-chart :chartData="chartData[1].data" :options="chartData[1].options"></line-chart>
-        </b-card>
-      </b-col>
     </b-row>
   </b-container>
 </template>

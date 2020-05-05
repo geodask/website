@@ -1,20 +1,122 @@
 const charts = [
   {
     data: {
-      labels: ["02/01-07/01", "10/01-18/01", "19/01-26/01", "27/01-08/02", "11/02-22/02", "25/02-05/03", "07/03-19/03", "20/03-26/03", "27/03-03/04"],
-      datasets: [
-        {
-          label: "2019",
-          borderColor: "rgb(255, 0, 0)",
-          data: [1, 0, 0, 3, 4, 2, 2, 2, 2]
-        },
-        {
-          label: "2020",
-          borderColor: "rgb(0, 0, 255)",
-          data: [2, 1, 1, 1, 2, 1, 2, 4, 3]
-        },
-
+      labels: [
+        new Date("01-03-2020"),
+        new Date("01-06-2020"),
+        new Date("01-09-2020"),
+        new Date("01-10-2020"),
+        new Date("01-16-2020"),
+        new Date("01-17-2020"),
+        new Date("01-21-2020"),
+        new Date("01-22-2020"),
+        new Date("01-23-2020"),
+        new Date("01-26-2020"),
+        new Date("01-29-2020"),
+        new Date("01-30-2020"),
+        new Date("01-31-2020"),
+        new Date("02-01-2020"),
+        new Date("02-04-2020"),
+        new Date("02-06-2020"),
+        new Date("02-09-2020"),
+        new Date("02-11-2020"),
+        new Date("02-25-2020"),
+        new Date("03-01-2020"),
+        new Date("03-06-2020"),
+        new Date("03-08-2020"),
+        new Date("03-09-2020"),
+        new Date("03-11-2020"),
+        new Date("03-16-2020"),
+        new Date("03-20-2020"),
+        new Date("03-23-2020"),
+        new Date("03-24-2020"),
+        new Date("03-25-2020"),
+        new Date("03-26-2020"),
+        new Date("03-30-2020"),
+        new Date("04-14-2020")
       ],
+      datasets: [{
+        label: "2019",
+        borderColor: "rgb(255, 0, 0)",
+        lineTension: 0,
+        data: [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          2,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          4,
+          4,
+          4,
+          4,
+          4,
+          4,
+          4,
+          5,
+          5,
+          5,
+          5,
+          5,
+          6,
+          6,
+          6
+        ]
+
+      },
+      {
+        label: "2020",
+        borderColor: "rgb(0, 0, 255)",
+        lineTension: 0,
+        data: [
+          0,
+          0,
+          1,
+          1,
+          1,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          4,
+          4,
+          5,
+          5,
+          5,
+          5,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          13,
+          14,
+          15,
+          15,
+          15,
+          15
+        ]
+
+
+      }
+      ]
     },
     options: {
       title: {
@@ -23,36 +125,48 @@ const charts = [
       },
       responsive: true,
       maintainAspectRatio: false,
-      events: ["mousedown", "mousemove", "click"]
-    }
-  },
-  {
+      scales: {
+        xAxes: [{
+          type: 'time',
+          time: {
+            unit: 'day',
+            minUnit: 'day',
+            tooltipFormat: 'll'
+          },
+          scaleLabel: {
+            display: true,
+            labelString: 'Date'
+          },
 
-    data: {
-      labels: ["02/01", "03/01", "04/01", "07/01", "10/01", "12/01", "13/01", "14/01", "15/01", "16/01", "18/01", "19/01", "20/01", "22/01", "23/01", "24/01", "25/01", "26/01", "27/01", "28/01", "30/01", "31/01", "02/02", "06/02", "08/02", "11/02", "12/02", "15/02", "16/02", "18/02", "21/02", "22/02", "25/02", "27/02", "28/02", "02/03", "03/03", "04/03", "05/03", "07/03", "10/03", "11/03", "14/03", "15/03", "18/03", "19/03", "20/03", "21/03", "22/03", "23/03", "24/03", "25/03", "26/03", "27/03", "28/03", "29/03", "31/03", "01/04", "02/04", "03/04"
-      ],
-      datasets: [{
-        label: "2019",
-        borderColor: "rgb(255, 0, 0)",
-        data: [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 3, 4, 4, 4, 5, 6, 6, 6, 8, 9, 9, 9, 10, 10, 10, 10, 11, 11, 11, 11, 11, 12, 12, 12, 12, 12, 12, 12, 13, 14, 15, 15, 15, 15, 16, 16, 16]
-
+        }]
       },
-      {
-        label: "2020",
-        borderColor: "rgb(0, 0, 255)",
-        data: [1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 9, 9, 9, 9, 9, 10, 11, 11, 13, 13, 14, 14, 14, 14, 14, 15, 16, 16, 17, 17]
-      }]
-    },
-    options: {
-      title: {
-        text: "Andamento decessi per comune - anni 2019 e 2020",
-        display: true
+      plugins: {
+        zoom: {
+          pan: {
+            enabled: false,
+            mode: 'xy'
+          },
+          zoom: {
+            drag: {
+              borderColor: 'rgba(0,0,0,0.4)',
+              borderWidth: 1,
+              backgroundColor: 'rgba(0,0,0,0.5)',
+              animationDuration: 1000
+            },
+            enabled: true,
+            mode: 'x',
+            speed: 0.05,
+            sensitivity: 10,
+          }
+        }
       },
-      responsive: true,
-      maintainAspectRatio: false
     }
   }
 ];
+
+// var randomScalingFactor = function () {
+//   return (Math.random() > 0.5 ? 1.0 : -1.0) * Math.round(Math.random() * 100);
+// };
 
 
 export class ChartService {
